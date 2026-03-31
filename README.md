@@ -153,6 +153,19 @@ Three layers form the verification chain:
 
 Coverage measures what was executed. Mutation testing measures whether the tests actually detect changes.
 
+## Observability
+
+The three enforcement loops generate signals that make the collaboration observable. Without observability, cost discipline is aspirational and verification metrics are snapshots rather than trends.
+
+| Panel | What to track | Source in this repo |
+| ----- | ------------- | ------------------- |
+| **Cost** | Spend trend, model-tier distribution | Claude Code analytics dashboard |
+| **Quality** | Coverage trend (96%), mutation score trend | CI artifacts from go-tests.yml and mutation-testing.yml |
+| **Adoption** | Sessions per developer, acceptance rate | Provider analytics |
+| **Habitat health** | Harness 7/7 enforced, REFLECTION_LOG.md growth | /harness-status, git log |
+
+The METR study found developers perceive a 20% AI speedup but measure a 19% slowdown. Observability closes this gap — measure first, believe second.
+
 ---
 
 ## How to Study This Repo
