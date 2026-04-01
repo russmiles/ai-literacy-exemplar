@@ -218,6 +218,34 @@ Suggested reading order:
 7. **[internal/checker.go](internal/checker.go)** — CUPID properties in practice
 8. **[.claude/agents/](/.claude/agents/)** — the agent team
 
+### Try It Yourself
+
+The best way to understand the framework is to exercise the pipeline on a real change.
+
+#### Exercise: Add a new link type
+
+mdcheck currently validates inline links, reference links, autolinks, and fragment links. Try adding support for image links (`![alt](url)`).
+
+**Using the agent pipeline:**
+
+```text
+Use the orchestrator agent: "Add image link extraction and validation to mdcheck"
+```
+
+The orchestrator will create an issue, update the spec, write failing tests, implement, review, and merge — demonstrating the full Level 4 workflow.
+
+**Manually (step by step):**
+
+1. Update `specs/001-link-checker/spec.md` — add acceptance scenarios for image links
+2. Update `specs/001-link-checker/plan.md` — add FR mapping and test cases
+3. Write failing tests in `internal/parser_test.go`
+4. Run `go test ./internal/ -v` — confirm they fail
+5. Implement in `internal/parser.go`
+6. Run `go test ./... -v` — confirm all tests pass
+7. Check coverage: `go test ./internal/ -coverprofile=coverage.out && go tool cover -func=coverage.out`
+8. Run `/harness-health` to capture a snapshot
+9. Run `/reflect` to capture what you learned
+
 ---
 
 ## How to Apply to Your Own Project
