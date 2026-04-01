@@ -5,6 +5,7 @@ import (
 	"net/http/httptest"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -115,6 +116,69 @@ func TestCheckFragmentOnly_Skipped(t *testing.T) {
 
 	if results[0].Broken {
 		t.Error("fragment-only links should not be broken")
+	}
+}
+
+func TestCheckLinks_FragmentValid(t *testing.T) {
+	dir := t.TempDir()
+	target := filepath.Join(dir, "README.md")
+	os.WriteFile(target, []byte("# Title\n\n## Setup\n\nContent here.\n"), 0644)
+
+	source := filepath.Join(dir, "doc.md")
+	links := []Link{
+		{Text: "Setup", Target: "README.md#setup", File: source, Line: 1, LinkType: "inline"},
+	}
+
+	results := CheckLinks(links)
+
+	if len(results) != 1 {
+		t.Fatalf("expected 1 result, got %d", len(results))
+	}
+	if results[0].Broken {
+		t.Errorf("expected valid link, got broken: %s", results[0].Reason)
+	}
+}
+
+func TestCheckLinks_FragmentMissing(t *testing.T) {
+	dir := t.TempDir()
+	target := filepath.Join(dir, "README.md")
+	os.WriteFile(target, []byte("# Title\n\nNo setup heading here.\n"), 0644)
+
+	source := filepath.Join(dir, "doc.md")
+	links := []Link{
+		{Text: "Setup", Target: "README.md#setup", File: source, Line: 1, LinkType: "inline"},
+	}
+
+	results := CheckLinks(links)
+
+	if len(results) != 1 {
+		t.Fatalf("expected 1 result, got %d", len(results))
+	}
+	if !results[0].Broken {
+		t.Error("expected broken link for missing fragment")
+	}
+	if !strings.Contains(results[0].Reason, "fragment #setup not found") {
+		t.Errorf("expected fragment not found reason, got: %s", results[0].Reason)
+	}
+}
+
+func TestCheckLinks_FragmentSlugNormalisation(t *testing.T) {
+	dir := t.TempDir()
+	target := filepath.Join(dir, "README.md")
+	os.WriteFile(target, []byte("# Title\n\n## Getting Started!\n\nContent.\n"), 0644)
+
+	source := filepath.Join(dir, "doc.md")
+	links := []Link{
+		{Text: "Start", Target: "README.md#getting-started", File: source, Line: 1, LinkType: "inline"},
+	}
+
+	results := CheckLinks(links)
+
+	if len(results) != 1 {
+		t.Fatalf("expected 1 result, got %d", len(results))
+	}
+	if results[0].Broken {
+		t.Errorf("expected valid link after slug normalisation, got broken: %s", results[0].Reason)
 	}
 }
 
