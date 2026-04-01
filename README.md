@@ -21,7 +21,7 @@ go build ./cmd/mdcheck/
 ./mdcheck README.md
 ```
 
-Given a file or directory, it extracts all links (inline, reference, autolinks), verifies each one (HTTP HEAD for URLs, file existence for local paths), and reports any that are broken with file, line, and reason. Exits non-zero if broken links are found.
+Given a file or directory, it extracts all links (inline, reference, autolinks), verifies each one (HTTP HEAD for URLs, file existence for local paths), validates fragment links (`file.md#heading`) against actual headings, and reports any that are broken with file, line, and reason. Exits non-zero if broken links are found.
 
 That's it. The application is deliberately simple — three source files, two test files, readable in ten minutes. The point is not the application. The point is how it was built.
 
@@ -36,7 +36,7 @@ This repository demonstrates the AI Literacy framework's development workflow at
 CI workflows enforce quality on every push:
 
 - **markdownlint** — all Markdown files pass lint
-- **Go tests** — 15 tests, all passing
+- **Go tests** — 18 tests, all passing
 - **Coverage** — 96% on parser and checker (85% threshold enforced)
 - **govulncheck** — no known vulnerabilities in dependencies
 - **Mutation testing** — weekly via go-mutesting (investigative loop)
@@ -156,7 +156,7 @@ INVESTIGATIVE LOOP (scheduled — sweep for entropy)
 
 Three layers form the verification chain:
 
-1. **Tests verify behaviour** — 15 tests derived from spec acceptance scenarios
+1. **Tests verify behaviour** — 18 tests derived from spec acceptance scenarios
 2. **Coverage verifies execution** — 96% of statements in parser and checker
 3. **Mutation testing verifies the tests** — weekly go-mutesting confirms tests detect faults
 

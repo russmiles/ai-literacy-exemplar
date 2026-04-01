@@ -2,6 +2,26 @@
 
 ---
 
+## 31 March 2026 (afternoon)
+
+### New feature — fragment link validation
+
+- **Added fragment link validation to mdcheck (FR-011)** — links like
+  `file.md#heading` now verify that the heading exists in the target
+  file. Headings are normalised to GitHub-compatible slugs. Missing
+  headings are reported as broken with a clear reason message.
+- **Spec, plan, and tests updated before implementation** — two new
+  acceptance scenarios, FR-011 added to spec, plan updated with FR
+  mapping and test cases, three failing tests written before any
+  production code.
+- **Coverage maintained at 96.1%** — all new functions (slugify,
+  fileHasFragment, updated checkLocalFile) at 87-100% coverage.
+- **Reflection captured** — spec-first workflow surfaced slug
+  normalisation concern during scenario writing, preventing scope
+  creep during implementation.
+
+---
+
 ## 1 April 2026
 
 ### Level 5 infrastructure
