@@ -6,7 +6,7 @@
 [![Harness Health](https://img.shields.io/badge/Harness_Health-Healthy-2E8B57?style=flat-square)](observability/snapshots/2026-04-01-snapshot.md)
 [![Mutation Testing](https://img.shields.io/badge/Mutation_Testing-weekly-4682B4?style=flat-square)](HARNESS.md)
 [![Coverage](https://img.shields.io/badge/Coverage-96%25-2E8B57?style=flat-square)](HARNESS.md)
-[![AI Literacy](https://img.shields.io/badge/AI_Literacy-Level_3-20B2AA?style=flat-square)](assessments/2026-03-31-assessment.md)
+[![AI Literacy](https://img.shields.io/badge/AI_Literacy-Level_4_Specification_Architect-2E8B57?style=flat-square)](assessments/2026-04-01-assessment.md)
 
 A worked example of the AI Literacy framework — a Go CLI Markdown link checker built using the [ai-literacy-superpowers](https://github.com/russmiles/ai-literacy-superpowers) plugin, with the full framework-aligned development workflow in action.
 
