@@ -211,6 +211,10 @@ Three layers form the verification chain:
 
 Coverage measures what was executed. Mutation testing measures whether the tests actually detect changes.
 
+**Harness constraint counts:** HARNESS.md contains **7 constraints** (in the Constraints section) and **5 garbage collection rules** (in the GC section). All 7 constraints and all 5 GC rules are enforced. The badge `7/7 enforced` refers to the 7 constraints; GC rules are tracked separately in the Status block at the bottom of HARNESS.md.
+
+**Dependabot** is configured (`.github/dependabot.yml`) for weekly Go module and GitHub Actions updates, contributing to dependency currency monitoring in the investigative loop.
+
 ## Harness Observability
 
 This repository demonstrates Level 3 harness observability — file-based health snapshots with operational cadence.
