@@ -162,7 +162,35 @@ Three layers form the verification chain:
 
 Coverage measures what was executed. Mutation testing measures whether the tests actually detect changes.
 
-## Observability
+## Harness Observability
+
+This repository demonstrates Level 3 harness observability — file-based health snapshots with operational cadence.
+
+The harness is observable through four layers:
+
+| Layer | Question | How |
+| ----- | -------- | --- |
+| Operational cadence | Is the harness running? | `/harness-health` generates snapshots; a Stop hook nudges when the last snapshot is older than 30 days |
+| Trend visibility | How has the harness changed? | Snapshots are diffed to show deltas; `--trends` produces multi-period views |
+| Telemetry export | Can I visualise this externally? | Snapshot data can be exported as OpenTelemetry metrics (optional — not configured in this repo) |
+| Meta-observability | Is the observability itself working? | Five self-checks verify the observability itself is operating |
+
+Health snapshots are stored in `observability/snapshots/` as structured markdown files capturing enforcement ratios, GC status, mutation scores, compound learning velocity, and operational cadence compliance. Trends are derived by diffing consecutive snapshots — no external tooling required.
+
+The README health badge reflects the aggregate status: Healthy (green), Attention (amber), or Degraded (red).
+
+**To generate a snapshot:**
+
+```bash
+# Quick mode — reads existing data, no agents dispatched
+/harness-health
+
+# Deep mode — dispatches harness-auditor for authoritative verification
+/harness-health --deep
+
+# Trends — multi-period view for quarterly reviews
+/harness-health --trends
+```
 
 The three enforcement loops generate signals that make the collaboration observable. Without observability, cost discipline is aspirational and verification metrics are snapshots rather than trends.
 
