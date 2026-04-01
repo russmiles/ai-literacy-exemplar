@@ -56,6 +56,20 @@ reference links `[text][ref]`, and autolinks `<url>`
 When I run `mdcheck` against it
 Then all three link types are extracted and checked
 
+### Scenario 6: Fragment link — heading exists
+
+Given a Markdown file with the link `[Setup](README.md#setup)`
+When I run `mdcheck` against it
+And README.md exists with a `## Setup` heading
+Then the link is reported as valid
+
+### Scenario 7: Fragment link — heading missing
+
+Given a Markdown file with the link `[Setup](README.md#setup)`
+When I run `mdcheck` against it
+And README.md exists but has no `## Setup` heading
+Then the link is reported as broken with reason "fragment #setup not found in README.md"
+
 ## Functional Requirements
 
 - **FR-001**: Parse inline links of the form `[text](url)`
@@ -72,6 +86,15 @@ Then all three link types are extracted and checked
 - **FR-008**: When given a directory, recursively find all `.md` files
 - **FR-009**: Exit with code 0 if no broken links, code 1 if any broken
 - **FR-010**: Print a summary line: "N links checked, M broken"
+- **FR-011**: When a local file link contains a fragment (e.g.,
+  `file.md#heading`), verify the heading exists in the target file:
+  1. Verify the target file exists (existing FR-003 behaviour)
+  2. Parse the target file for ATX-style headings (lines starting with `#`)
+  3. Normalise fragment and heading text to lowercase, spaces replaced
+     with hyphens, non-alphanumeric characters removed (GitHub-compatible slug)
+  4. Report as broken if no matching heading found, with reason
+     "fragment #slug not found in file"
+  5. Report as valid if a matching heading is found
 
 ## Success Criteria
 

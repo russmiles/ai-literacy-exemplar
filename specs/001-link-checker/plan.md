@@ -58,6 +58,10 @@ For each Link:
    directory. Check file existence. Not found → broken.
 3. Skip fragment-only links (`#heading`) — these reference anchors
    within the same file and are not checked.
+4. If a local file link contains a fragment (`file.md#heading`), verify
+   the file exists, then parse the file for ATX headings, slugify them
+   (GitHub-compatible: lowercase, spaces→hyphens, strip non-alphanumeric),
+   and check whether the fragment matches any heading slug.
 
 ## FR Mapping
 
@@ -73,10 +77,13 @@ For each Link:
 | FR-008 | main.go: recursive file discovery |
 | FR-009 | main.go: exit code logic |
 | FR-010 | main.go: summary line output |
+| FR-011 | checker.go: fragment validation (slugify + fileHasFragment) |
 
 ## Test Strategy
 
 - Parser tests: provide Markdown strings, assert correct Link structs
 - Checker tests: use httptest for URL checking, temp files for local
   path checking
+- Fragment validation tests: valid fragment resolves, missing fragment
+  reports broken, slug normalisation handles punctuation and mixed case
 - Coverage target: 85% on parser.go and checker.go
