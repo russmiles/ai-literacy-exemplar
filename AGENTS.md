@@ -12,6 +12,12 @@
 
 <!-- Populated from REFLECTION_LOG.md -->
 
+GOTCHA: configured-vs-operational — A fully configured habitat (HARNESS.md,
+agents, skills, hooks) does not guarantee operational maturity. The habitat
+must be exercised through routine practice: regular audits, reflection capture
+and promotion, pipeline usage across features, and cadence-driven health
+checks. Configuration is Level 3; operation is Level 4+.
+
 ## ARCH_DECISIONS
 
 - Parser extracts links from Markdown without a full AST — regex

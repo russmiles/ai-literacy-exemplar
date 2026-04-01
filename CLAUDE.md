@@ -37,3 +37,13 @@ After every push:
 1. Run `gh pr checks <number> --watch`
 2. Fix any failures
 3. Do not declare ready until all checks green
+
+## Quarterly Operating Cadence
+
+Run these on a quarterly basis to keep the habitat healthy:
+
+1. **`/assess`** — run a full AI literacy assessment
+2. **`/harness-audit`** — verify declared enforcement matches reality
+3. **Review REFLECTION_LOG.md** — promote worthy entries to AGENTS.md
+4. **Check mutation testing trends** — compare weekly mutation scores over the quarter
+5. **Run `/harness-health`** — generate a health snapshot and review trends

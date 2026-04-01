@@ -2,6 +2,33 @@
 
 ---
 
+## 1 April 2026
+
+### Level 5 infrastructure
+
+- **Fixed README agent and skill counts** — agent count corrected from
+  six to seven (assessor added), skill count corrected from four to five
+  (ai-literacy-assessment skill added), mechanism map updated with all
+  five GC rules and correct agent tier guidance.
+- **Added quarterly operating cadence to CLAUDE.md** — documents the
+  five recurring actions (assess, harness-audit, reflection review,
+  mutation trend check, harness-health) needed to keep the habitat
+  operational rather than merely configured.
+- **Promoted first reflection to AGENTS.md GOTCHAS** — the
+  configured-vs-operational insight from the 2026-03-31 assessment is
+  now a permanent GOTCHA for future agents. Compound learning
+  demonstrated for the first time.
+- **Expanded HARNESS.md from 1 to 5 GC rules** — added convention
+  drift, stale AGENTS.md, snapshot staleness, and dependency currency.
+  All five rules have enforcement configured; status section updated to
+  5/5 active, audit date 2026-04-01.
+- **Replaced sample snapshot with accurate health data** — the
+  2026-04-01 snapshot now reflects actual state: 7/7 constraints,
+  5/5 GC rules, 1 reflection promoted, mutation testing deferred to
+  CI artifacts rather than fabricated numbers.
+
+---
+
 ## 31 March 2026
 
 ### AI Literacy Assessment

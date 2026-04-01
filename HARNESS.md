@@ -86,11 +86,47 @@
 - **Tool**: harness-gc agent
 - **Auto-fix**: false
 
+### Convention drift
+
+- **What it checks**: Whether source files follow literate programming
+  preambles and CUPID naming conventions
+- **Frequency**: weekly
+- **Enforcement**: agent
+- **Tool**: harness-gc agent
+- **Auto-fix**: false
+
+### Stale AGENTS.md
+
+- **What it checks**: Whether REFLECTION_LOG.md entries older than 30
+  days have been reviewed for promotion to AGENTS.md
+- **Frequency**: weekly
+- **Enforcement**: agent
+- **Tool**: harness-gc agent
+- **Auto-fix**: false
+
+### Snapshot staleness
+
+- **What it checks**: Whether the most recent harness health snapshot
+  in observability/snapshots/ is less than 30 days old
+- **Frequency**: weekly
+- **Enforcement**: deterministic
+- **Tool**: file date check
+- **Auto-fix**: false
+
+### Dependency currency
+
+- **What it checks**: Whether project dependencies have known
+  vulnerabilities or are outdated
+- **Frequency**: weekly
+- **Enforcement**: deterministic
+- **Tool**: govulncheck + Dependabot
+- **Auto-fix**: false
+
 ---
 
 ## Status
 
-Last audit: 2026-03-31
+Last audit: 2026-04-01
 Constraints enforced: 7/7
-Garbage collection active: 1/1
+Garbage collection active: 5/5
 Drift detected: no

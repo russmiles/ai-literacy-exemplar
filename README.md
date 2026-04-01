@@ -48,8 +48,8 @@ The development environment is fully configured:
 - **CLAUDE.md** — literate programming, CUPID review, spec-first workflow, TDD
 - **HARNESS.md** — 7 constraints, all enforced (4 deterministic, 2 agent, 1 weekly)
 - **AGENTS.md** — compound learning memory with architectural decisions
-- **MODEL_ROUTING.md** — model-tier guidance for the six-agent team
-- **4 project-local skills** — literate programming, CUPID, supply chain, dependency audit
+- **MODEL_ROUTING.md** — model-tier guidance for the seven-agent team
+- **Five project-local skills** — literate programming, CUPID, supply chain, dependency audit, AI literacy assessment
 
 ### Level 4: Specification-Driven Development
 
@@ -60,7 +60,7 @@ The link checker was specified before it was built:
 
 ### Level 5: The Agent Team
 
-Six agents coordinate the development lifecycle:
+Seven agents coordinate the development lifecycle:
 
 ```text
 orchestrator
@@ -92,12 +92,13 @@ ADVISORY LOOP (edit time — warn, do not block)
 ├── Context (read by agents at session start)
 │   ├── CLAUDE.md                       Go conventions, LP, CUPID, spec-first, TDD
 │   ├── AGENTS.md                       Compound learning memory
-│   ├── MODEL_ROUTING.md                Model-tier guidance for 6 agents
+│   ├── MODEL_ROUTING.md                Model-tier guidance for 7 agents
 │   └── .claude/skills/
 │       ├── literate-programming/       Code generation conventions
 │       ├── cupid-code-review/          Code review lens
 │       ├── github-actions-supply-chain/ CI hardening checklist
-│       └── dependency-vulnerability-audit/ Go CVE procedures
+│       ├── dependency-vulnerability-audit/ Go CVE procedures
+│       └── ai-literacy-assessment/     AI literacy scoring and remediation
 │
 └── Commands
     ├── /reflect                        Capture post-task learnings
@@ -138,7 +139,11 @@ INVESTIGATIVE LOOP (scheduled — sweep for entropy)
 │   └── gomod                           Weekly Go dependency updates
 │
 ├── Garbage Collection Rules (HARNESS.md)
-│   └── Documentation freshness         Agent — stale references
+│   ├── Documentation freshness         Agent — stale references
+│   ├── Convention drift                Agent — LP preambles, CUPID naming
+│   ├── Stale AGENTS.md                 Agent — unreviewed reflection entries
+│   ├── Snapshot staleness              Deterministic — file date check
+│   └── Dependency currency             Deterministic — govulncheck + Dependabot
 │
 └── Compound Learning
     ├── REFLECTION_LOG.md               Agent reflections (append-only)
