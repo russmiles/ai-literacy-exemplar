@@ -2,6 +2,21 @@
 
 ---
 
+## 31 March 2026 (Q2 update)
+
+### Documentation
+
+- **Improved README with five targeted gaps** — added a Try It Yourself
+  exercise with agent pipeline and manual instructions for adding image
+  link support; named all source files with one-line descriptions; showed
+  illustrative example output with exit codes; documented the L3-to-L4
+  assessment and remediation progression; explained the compound learning
+  three-stage cycle with concrete REFLECTION_LOG and AGENTS.md state;
+  clarified the distinction between the 7 constraints and 5 GC rules, and
+  noted Dependabot's role in the investigative loop.
+
+---
+
 ## 1 April 2026 (afternoon)
 
 ### AI Literacy Assessment
