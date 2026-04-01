@@ -184,6 +184,21 @@ INVESTIGATIVE LOOP (scheduled — sweep for entropy)
     └── AGENTS.md                       Human-curated from reflections
 ```
 
+#### Compound learning
+
+The repo demonstrates the three-stage learning cycle:
+
+1. **Capture** — agents append structured reflections to `REFLECTION_LOG.md` after each task
+2. **Curate** — humans review reflections and promote worthy entries to `AGENTS.md`
+3. **Benefit** — all agents read `AGENTS.md` at session start
+
+**Current state:**
+
+- `REFLECTION_LOG.md` — 3 entries (assessment reflection ×2, fragment validation reflection)
+- `AGENTS.md` — 1 GOTCHA promoted: "configured-vs-operational" (a fully configured habitat does not guarantee operational maturity)
+
+This GOTCHA now informs all future agent sessions — they know the difference between infrastructure that exists and practices that are followed.
+
 ---
 
 ## Verification Approach
