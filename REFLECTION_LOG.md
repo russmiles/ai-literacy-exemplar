@@ -23,6 +23,15 @@
 
 ---
 
+- **Date**: 2026-04-01
+- **Agent**: assessor (via /assess command)
+- **Task**: Second AI literacy assessment — Level 4 Specification Architect
+- **Surprise**: The delta between L3 and L4 was entirely practice, not infrastructure. All three gaps from the L3 assessment (empty reflections, no cadence, pipeline not re-exercised) were closed within 48 hours because the infrastructure was already in place. The configured-vs-operational gotcha promoted to AGENTS.md turned out to be the single most important insight: it predicted exactly what needed to happen. The remaining gap to L5 is qualitatively different — it requires elapsed time (multi-quarter cadence) and organisational scope (platform tooling, OTel), not sprint-level work.
+- **Proposal**: Add to AGENTS.md: "The gap between Level 4 and Level 5 is not infrastructure — it is elapsed time and organisational scope. L5 cannot be sprinted to. It requires sustained quarterly practice, actual cost data, and tooling that serves teams beyond the originating repo."
+- **Improvement**: Future assessments should check whether the quarterly cadence has been sustained across a full quarter, not just documented. A documented cadence with zero completed cycles is still L3.
+
+---
+
 - **Date**: 2026-03-31
 - **Agent**: go-implementer (via spec-first TDD pipeline)
 - **Task**: Add fragment link validation to mdcheck (FR-011)

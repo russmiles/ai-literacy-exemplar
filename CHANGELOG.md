@@ -2,6 +2,24 @@
 
 ---
 
+## 1 April 2026 (afternoon)
+
+### AI Literacy Assessment
+
+- **Second AI literacy assessment: Level 4 — Specification Architect** —
+  all three L3 gaps addressed (compound learning active, cadence
+  documented, pipeline exercised on fragment validation). Context
+  engineering 4/5, architectural constraints 5/5, guardrail design 4/5.
+  Remaining gaps to L5: no OTel, no cost data, cadence not yet proven
+  across a full quarter.
+- **README badge updated** — AI Literacy badge now shows Level 4 with
+  link to the new assessment document.
+- **Assessment reflection captured** — third REFLECTION_LOG entry
+  documenting the L3-to-L4 progression and the qualitative difference
+  between L4 and L5.
+
+---
+
 ## 31 March 2026 (afternoon)
 
 ### New feature — fragment link validation
