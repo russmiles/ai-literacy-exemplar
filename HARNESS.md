@@ -73,6 +73,15 @@
 - **Tool**: Weekly mutation-testing.yml workflow
 - **Scope**: weekly
 
+### SBOM generation
+
+- **Rule**: A Software Bill of Materials is generated for every release
+  binary, listing all dependencies and their licenses
+- **Enforcement**: unverified
+- **Tool**: `go version -m` or syft/cyclonedx-gomod (activate when
+  first external dependency is added)
+- **Scope**: pr
+
 ---
 
 ## Garbage Collection
@@ -127,6 +136,6 @@
 ## Status
 
 Last audit: 2026-04-01
-Constraints enforced: 7/7
+Constraints enforced: 7/8
 Garbage collection active: 5/5
 Drift detected: no

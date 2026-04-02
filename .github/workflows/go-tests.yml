@@ -36,6 +36,22 @@ jobs:
           echo "Total coverage: ${COVERAGE}%"
           python3 -c "import sys; sys.exit(0 if float('${COVERAGE}') >= 85.0 else 1)"
 
+      # SBOM generation — activate when the first external dependency is
+      # added to go.mod. Currently stdlib-only, so SBOM would be empty.
+      # When activated, promote the HARNESS.md constraint from unverified
+      # to deterministic.
+      #
+      # - name: Generate SBOM
+      #   run: |
+      #     go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest
+      #     cyclonedx-gomod app -json -output sbom.cdx.json ./cmd/mdcheck/
+      #
+      # - name: Upload SBOM
+      #   uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f  # v7.0.0
+      #   with:
+      #     name: sbom
+      #     path: sbom.cdx.json
+
       - name: Upload coverage
         if: always()
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f  # v7.0.0

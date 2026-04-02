@@ -4,7 +4,7 @@
 [![Go Tests](https://github.com/russmiles/ai-literacy-exemplar/actions/workflows/go-tests.yml/badge.svg)](https://github.com/russmiles/ai-literacy-exemplar/actions/workflows/go-tests.yml)
 [![Lint Markdown](https://github.com/russmiles/ai-literacy-exemplar/actions/workflows/lint-markdown.yml/badge.svg)](https://github.com/russmiles/ai-literacy-exemplar/actions/workflows/lint-markdown.yml)
 [![Go 1.26.1](https://img.shields.io/badge/Go-1.26.1-00ADD8?logo=go&logoColor=white)](https://go.dev/)
-[![Harness](https://img.shields.io/badge/Harness-7%2F7_enforced-2E8B57?style=flat-square)](HARNESS.md)
+[![Harness](https://img.shields.io/badge/Harness-7%2F8_enforced-4682B4?style=flat-square)](HARNESS.md)
 [![Harness Health](https://img.shields.io/badge/Harness_Health-Healthy-2E8B57?style=flat-square)](observability/snapshots/2026-04-01-snapshot.md)
 [![Mutation Testing](https://img.shields.io/badge/Mutation_Testing-weekly-4682B4?style=flat-square)](HARNESS.md)
 [![Coverage](https://img.shields.io/badge/Coverage-96%25-2E8B57?style=flat-square)](HARNESS.md)
@@ -213,7 +213,9 @@ Three layers form the verification chain:
 
 Coverage measures what was executed. Mutation testing measures whether the tests actually detect changes.
 
-**Harness constraint counts:** HARNESS.md contains **7 constraints** (in the Constraints section) and **5 garbage collection rules** (in the GC section). All 7 constraints and all 5 GC rules are enforced. The badge `7/7 enforced` refers to the 7 constraints; GC rules are tracked separately in the Status block at the bottom of HARNESS.md.
+**Harness constraint counts:** HARNESS.md contains **8 constraints** (in the Constraints section) and **5 garbage collection rules** (in the GC section). 7 of 8 constraints are enforced; the 8th (SBOM generation) is declared as `unverified` — ready to activate when the first external dependency is added to go.mod. The badge `7/8 enforced` refers to this ratio; GC rules are tracked separately as 5/5 in the Status block.
+
+**SBOM readiness:** The CI workflow (`go-tests.yml`) contains a prepared-but-commented SBOM generation step using CycloneDX. Currently the binary is stdlib-only, so an SBOM would be empty. When the first external dependency arrives, uncomment the step and promote the HARNESS.md constraint from `unverified` to `deterministic`. This follows the harness promotion ladder: declare intent now, automate when it matters.
 
 **Dependabot** is configured (`.github/dependabot.yml`) for weekly Go module and GitHub Actions updates, contributing to dependency currency monitoring in the investigative loop.
 
