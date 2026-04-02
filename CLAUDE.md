@@ -21,6 +21,21 @@ All reviews apply the CUPID lens:
 - **Idiomatic** — does it follow Go conventions?
 - **Domain-based** — do names come from Markdown and link checking?
 
+## Conventional Comments
+
+All review feedback uses [Conventional Comments](https://conventionalcomments.org/) labels. Every comment is prefixed with a label that signals intent, and a decoration that signals whether it blocks merge.
+
+**Labels:** `praise`, `issue`, `suggestion`, `nitpick`, `question`, `thought`, `todo`, `chore`, `note`
+
+**Decorations:** `(blocking)` — must fix before merge. `(non-blocking)` — should not prevent merge. `(if-minor)` — fix only if trivial.
+
+**Rules:**
+
+1. Every review includes at least one `praise:` comment
+2. Every `issue:` is paired with a `suggestion:` when possible
+3. Use `question:` when uncertain whether something is a problem
+4. Use `nitpick:` for trivial preferences — do not dress up preferences as issues
+
 ## Workflow
 
 - **Spec-first**: changes flow through specs/001-link-checker/spec.md
