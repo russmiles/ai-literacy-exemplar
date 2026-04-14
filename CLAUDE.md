@@ -53,6 +53,16 @@ After every push:
 2. Fix any failures
 3. Do not declare ready until all checks green
 
+## Session Discipline
+
+After 90 minutes of continuous AI-assisted work, pause and self-assess:
+am I still reviewing critically, or am I rubber-stamping? If the answer
+is uncertain, end the session. Resume fresh.
+
+Signs of depletion: accepting output without reading diffs, skipping
+test verification, feeling impatient with review cycles. These are
+signals to stop, not push through.
+
 ## Quarterly Operating Cadence
 
 Run these on a quarterly basis to keep the habitat healthy:
@@ -60,5 +70,9 @@ Run these on a quarterly basis to keep the habitat healthy:
 1. **`/assess`** — run a full AI literacy assessment
 2. **`/harness-audit`** — verify declared enforcement matches reality
 3. **Review REFLECTION_LOG.md** — promote worthy entries to AGENTS.md
+   (also review monthly — entries older than 30 days without a
+   promote/dismiss decision are stale)
 4. **Check mutation testing trends** — compare weekly mutation scores over the quarter
 5. **Run `/harness-health`** — generate a health snapshot and review trends
+6. **Capture cost data** — record AI provider spend via `/cost-capture`
+   or manually into `observability/costs/` (first capture due 2026-06-30)

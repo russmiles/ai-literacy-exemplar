@@ -8,7 +8,7 @@
 [![Harness Health](https://img.shields.io/badge/Harness_Health-Healthy-2E8B57?style=flat-square)](observability/snapshots/)
 [![Mutation Testing](https://img.shields.io/badge/Mutation_Testing-weekly-4682B4?style=flat-square)](HARNESS.md)
 [![Coverage](https://img.shields.io/badge/Coverage-96%25-2E8B57?style=flat-square)](HARNESS.md)
-[![AI Literacy](https://img.shields.io/badge/AI_Literacy-Level_4_Specification_Architect-2E8B57?style=flat-square)](assessments/2026-04-01-assessment.md)
+[![AI Literacy](https://img.shields.io/badge/AI_Literacy-Level_4_Specification_Architect-2E8B57?style=flat-square)](assessments/2026-04-14-assessment.md)
 
 A worked example of the AI Literacy framework — a Go CLI Markdown link checker built using the [ai-literacy-superpowers](https://github.com/russmiles/ai-literacy-superpowers) plugin, with the full framework-aligned development workflow in action.
 
@@ -71,7 +71,7 @@ CI workflows enforce quality on every push:
 The development environment is fully configured:
 
 - **CLAUDE.md** — literate programming, CUPID review, spec-first workflow, TDD
-- **HARNESS.md** — 7 constraints, all enforced (4 deterministic, 2 agent, 1 weekly)
+- **HARNESS.md** — 8 constraints (7 enforced: 4 deterministic, 2 agent, 1 weekly; 1 unverified: SBOM)
 - **AGENTS.md** — compound learning memory with architectural decisions
 - **MODEL_ROUTING.md** — model-tier guidance for the seven-agent team
 - **Five project-local skills** — literate programming, CUPID, supply chain, dependency audit, AI literacy assessment
@@ -89,6 +89,7 @@ This repository has been assessed twice:
 
 - **2026-03-31**: Level 3 (Habitat Engineer) — all infrastructure configured but not yet operational. Three gaps identified: no operating cadence, compound learning not exercised, pipeline used only once.
 - **2026-04-01**: Level 4 (Specification Architect) — gaps addressed: operating cadence added to CLAUDE.md, first reflection promoted to AGENTS.md (compound learning demonstrated), pipeline exercised on a second feature (fragment validation).
+- **2026-04-14**: Level 4 (Specification Architect, deepening) — habitat actively evolving: SBOM constraint added, Conventional Comments adopted, health snapshots with trend comparison. Key finding: compound learning pipeline producing 100% signal quality but human review bottleneck slowing promotions.
 
 To run your own assessment: `/assess`
 
@@ -162,7 +163,8 @@ STRICT LOOP (merge time — block until green)
 └── Harness Constraints (HARNESS.md)
     ├── 4 deterministic                 markdownlint, tests, coverage, govulncheck
     ├── 2 agent-backed                  Literate programming, CUPID
-    └── 1 weekly deterministic          Mutation testing
+    ├── 1 weekly deterministic          Mutation testing
+    └── 1 unverified                    SBOM generation (activates with first dependency)
 
 
 INVESTIGATIVE LOOP (scheduled — sweep for entropy)
@@ -196,7 +198,7 @@ The repo demonstrates the three-stage learning cycle:
 
 **Current state:**
 
-- `REFLECTION_LOG.md` — 3 entries (assessment reflection ×2, fragment validation reflection)
+- `REFLECTION_LOG.md` — 4 entries (assessment reflection ×2, fragment validation reflection, harness health reflection)
 - `AGENTS.md` — 1 GOTCHA promoted: "configured-vs-operational" (a fully configured habitat does not guarantee operational maturity)
 
 This GOTCHA now informs all future agent sessions — they know the difference between infrastructure that exists and practices that are followed.
