@@ -10,9 +10,14 @@
 // The tool is deliberately simple: parse, check, report. It does not attempt
 // to fix links, suggest replacements, or cache results across runs. Each
 // invocation is a fresh, stateless verification pass.
+//
+// Output format is controlled by the --format flag: "text" (default) for
+// human-readable output, "json" for machine-readable envelopes, and "github"
+// for GitHub Actions annotations that surface inline on PR diffs.
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -22,12 +27,23 @@ import (
 )
 
 func main() {
-	if len(os.Args) < 2 {
-		fmt.Fprintf(os.Stderr, "Usage: mdcheck <file-or-directory>\n")
+	format := flag.String("format", "text", "output format: text, json, github")
+	flag.StringVar(format, "f", "text", "output format (shorthand)")
+	flag.Parse()
+
+	args := flag.Args()
+	if len(args) < 1 {
+		fmt.Fprintf(os.Stderr, "Usage: mdcheck [--format text|json|github] <file-or-directory>\n")
 		os.Exit(2)
 	}
 
-	target := os.Args[1]
+	formatter, err := selectFormatter(*format)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+		os.Exit(2)
+	}
+
+	target := args[0]
 	files, err := findMarkdownFiles(target)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
@@ -52,19 +68,34 @@ func main() {
 
 	results := internal.CheckLinks(allLinks)
 
+	if err := formatter.Format(results, os.Stdout); err != nil {
+		fmt.Fprintf(os.Stderr, "Error writing output: %v\n", err)
+		os.Exit(2)
+	}
+
 	broken := 0
 	for _, r := range results {
 		if r.Broken {
 			broken++
-			fmt.Printf("%s:%d: [%s](%s) — %s\n",
-				r.Link.File, r.Link.Line, r.Link.Text, r.Link.Target, r.Reason)
 		}
 	}
-
-	fmt.Printf("\n%d links checked, %d broken\n", len(results), broken)
-
 	if broken > 0 {
 		os.Exit(1)
+	}
+}
+
+// selectFormatter returns the appropriate Formatter for the given format
+// name, or an error if the name is not recognised.
+func selectFormatter(name string) (internal.Formatter, error) {
+	switch name {
+	case "text":
+		return internal.TextFormatter{}, nil
+	case "json":
+		return internal.JSONFormatter{}, nil
+	case "github":
+		return internal.GitHubFormatter{}, nil
+	default:
+		return nil, fmt.Errorf("unknown format %q (valid: text, json, github)", name)
 	}
 }
 

@@ -95,6 +95,19 @@ Then the link is reported as broken with reason "fragment #setup not found in RE
   4. Report as broken if no matching heading found, with reason
      "fragment #slug not found in file"
   5. Report as valid if a matching heading is found
+- **FR-012**: Accept a `--format` flag (short form `-f`) with values
+  `text`, `json`, or `github`. Default to `text`.
+- **FR-013**: `text` format: output broken links as
+  `file:line: [text](target) — reason`, followed by a summary line
+  `N links checked, M broken`
+- **FR-014**: `json` format: output a JSON envelope with `summary`
+  (total, broken) and `results` array (file, line, text, target,
+  broken, reason for every checked link)
+- **FR-015**: `github` format: output `::error file=F,line=L::message`
+  for each broken link, and `::notice::N links checked, M broken` as
+  summary
+- **FR-016**: Reject unknown format values with an error message
+  listing valid options and exit code 2
 
 ## Success Criteria
 
