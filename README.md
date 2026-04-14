@@ -3,8 +3,8 @@
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Go Tests](https://github.com/russmiles/ai-literacy-exemplar/actions/workflows/go-tests.yml/badge.svg)](https://github.com/russmiles/ai-literacy-exemplar/actions/workflows/go-tests.yml)
 [![Lint Markdown](https://github.com/russmiles/ai-literacy-exemplar/actions/workflows/lint-markdown.yml/badge.svg)](https://github.com/russmiles/ai-literacy-exemplar/actions/workflows/lint-markdown.yml)
-[![Go 1.26.1](https://img.shields.io/badge/Go-1.26.1-00ADD8?logo=go&logoColor=white)](https://go.dev/)
-[![Harness](https://img.shields.io/badge/Harness-7%2F8_enforced-4682B4?style=flat-square)](HARNESS.md)
+[![Go 1.26.2](https://img.shields.io/badge/Go-1.26.2-00ADD8?logo=go&logoColor=white)](https://go.dev/)
+[![Harness](https://img.shields.io/badge/Harness-9%2F13_enforced-4682B4?style=flat-square)](HARNESS.md)
 [![Harness Health](https://img.shields.io/badge/Harness_Health-Healthy-2E8B57?style=flat-square)](observability/snapshots/)
 [![Mutation Testing](https://img.shields.io/badge/Mutation_Testing-weekly-4682B4?style=flat-square)](HARNESS.md)
 [![Coverage](https://img.shields.io/badge/Coverage-96%25-2E8B57?style=flat-square)](HARNESS.md)
@@ -71,7 +71,7 @@ CI workflows enforce quality on every push:
 The development environment is fully configured:
 
 - **CLAUDE.md** — literate programming, CUPID review, spec-first workflow, TDD
-- **HARNESS.md** — 8 constraints (7 enforced: 4 deterministic, 2 agent, 1 weekly; 1 unverified: SBOM)
+- **HARNESS.md** — 13 constraints (8 technical + 5 governance; 9 enforced, 4 unverified)
 - **AGENTS.md** — compound learning memory with architectural decisions
 - **MODEL_ROUTING.md** — model-tier guidance for the seven-agent team
 - **Five project-local skills** — literate programming, CUPID, supply chain, dependency audit, AI literacy assessment
@@ -161,10 +161,15 @@ STRICT LOOP (merge time — block until green)
 │   └── assessor                       AI literacy assessment + remediation
 │
 └── Harness Constraints (HARNESS.md)
-    ├── 4 deterministic                 markdownlint, tests, coverage, govulncheck
-    ├── 2 agent-backed                  Literate programming, CUPID
-    ├── 1 weekly deterministic          Mutation testing
-    └── 1 unverified                    SBOM generation (activates with first dependency)
+    ├── Technical (8)
+    │   ├── 4 deterministic             markdownlint, tests, coverage, govulncheck
+    │   ├── 2 agent-backed              Literate programming, CUPID
+    │   ├── 1 weekly deterministic      Mutation testing
+    │   └── 1 unverified                SBOM generation (activates with first dependency)
+    └── Governance (5)
+        ├── 1 deterministic             Human review before merge
+        ├── 1 agent-backed              AI change traceability
+        └── 3 unverified                Secrets prevention, secrets detection, license allowlist
 
 
 INVESTIGATIVE LOOP (scheduled — sweep for entropy)
@@ -215,7 +220,34 @@ Three layers form the verification chain:
 
 Coverage measures what was executed. Mutation testing measures whether the tests actually detect changes.
 
-**Harness constraint counts:** HARNESS.md contains **8 constraints** (in the Constraints section) and **5 garbage collection rules** (in the GC section). 7 of 8 constraints are enforced; the 8th (SBOM generation) is declared as `unverified` — ready to activate when the first external dependency is added to go.mod. The badge `7/8 enforced` refers to this ratio; GC rules are tracked separately as 5/5 in the Status block.
+### Constraint Summary
+
+HARNESS.md contains **13 constraints** (8 technical + 5 governance) and **5 garbage collection rules**.
+
+#### Technical constraints
+
+| Constraint | Enforcement | What it verifies |
+| --- | --- | --- |
+| Markdown formatting | deterministic | All `.md` files pass markdownlint |
+| Go tests pass | deterministic | All tests pass with zero failures |
+| Go test coverage | deterministic | 85%+ coverage on parser.go and checker.go |
+| Go vulnerability scan | deterministic | No known CVEs via govulncheck |
+| Literate programming | agent | Every source file has a narrative preamble explaining reasoning |
+| CUPID properties | agent | Code is composable, unix, predictable, idiomatic, domain-based |
+| Mutation testing | deterministic | Weekly go-mutesting score tracked as CI artifact |
+| SBOM generation | unverified | Bill of materials for release binaries (activates with first external dependency) |
+
+#### Governance constraints
+
+| Constraint | Enforcement | What it verifies |
+| --- | --- | --- |
+| Human review before merge | deterministic | Every PR has an approving human review; agent checks before attempting merge |
+| No secrets — prevention | unverified | Pre-commit hook blocks commits containing secret patterns (gitleaks, to be configured) |
+| No secrets — detection | unverified | CI scan catches secrets missed by hooks (gitleaks CI step, to be added) |
+| Approved dependency licenses | unverified | All external dependencies use permissive OSI-approved licenses — MIT, Apache-2.0, BSD-2/3-Clause only; copyleft prohibited (activates with first external dependency) |
+| AI change traceability | agent | Every AI-assisted PR has identifiable commits, an attribution section in the PR description, and a linked session record (design spec, plan, or reflection) |
+
+Governance constraints use the full governance template in HARNESS.md: governance requirement, operational meaning, verification method, evidence, failure action, and three-frame alignment check (engineering, compliance, AI system).
 
 **SBOM readiness:** The CI workflow (`go-tests.yml`) contains a prepared-but-commented SBOM generation step using CycloneDX. Currently the binary is stdlib-only, so an SBOM would be empty. When the first external dependency arrives, uncomment the step and promote the HARNESS.md constraint from `unverified` to `deterministic`. This follows the harness promotion ladder: declare intent now, automate when it matters.
 
@@ -258,7 +290,7 @@ The three enforcement loops generate signals that make the collaboration observa
 | **Cost** | Spend trend, model-tier distribution | Claude Code analytics dashboard |
 | **Quality** | Coverage trend (96%), mutation score trend | CI artifacts from go-tests.yml and mutation-testing.yml |
 | **Adoption** | Sessions per developer, acceptance rate | Provider analytics |
-| **Habitat health** | Harness 7/7 enforced, REFLECTION_LOG.md growth | /harness-status, git log |
+| **Habitat health** | Harness 9/13 enforced, REFLECTION_LOG.md growth | /harness-status, git log |
 
 The METR study found developers perceive a 20% AI speedup but measure a 19% slowdown. Observability closes this gap — measure first, believe second.
 
