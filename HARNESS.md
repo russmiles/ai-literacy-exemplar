@@ -82,6 +82,116 @@
   first external dependency is added)
 - **Scope**: pr
 
+### Human review before merge
+
+- **Rule**: Every PR must have at least one approving human review
+  before merge
+- **Enforcement**: deterministic
+- **Tool**: GitHub branch protection (required reviews) + agent
+  pre-merge check
+- **Scope**: pr
+- **Governance requirement**: Human review of all AI-generated code
+  before merge
+- **Operational meaning**: GitHub branch protection requires at least
+  one approving review. The agent also checks for an existing approval
+  before attempting any merge operation and warns if none exists.
+- **Verification method**: deterministic — branch protection enforces
+  at merge time; agent verifies before invoking merge
+- **Evidence**: GitHub PR approval record (reviewer name, timestamp,
+  approval status)
+- **Failure action**: merge blocked by branch protection; agent warns
+  and does not attempt merge without approval
+- **Frame check**: confirmed aligned — engineering (approval required),
+  compliance (audit trail of reviewer identity and timestamp),
+  AI system (agent checks before merge, branch protection enforces)
+
+### No secrets in source — prevention
+
+- **Rule**: A pre-commit hook prevents committing files matching
+  known secret patterns (API keys, tokens, private keys, .env files)
+- **Enforcement**: unverified
+- **Tool**: gitleaks pre-commit hook (to be configured)
+- **Scope**: commit
+- **Governance requirement**: No secrets committed to source control
+- **Operational meaning**: A gitleaks pre-commit hook blocks commits
+  containing secret patterns before they enter git history
+- **Verification method**: deterministic locally; unverified from CI
+  (cannot confirm hook is installed on every machine)
+- **Evidence**: pre-commit hook configuration exists in the repository
+- **Failure action**: commit blocked locally by the hook
+- **Frame check**: confirmed aligned — engineering (hook blocks
+  secrets at commit time), compliance (hook config documented in
+  repo), AI system (agent never commits files matching secret
+  patterns)
+
+### No secrets in source — detection
+
+- **Rule**: A CI gitleaks scan finds zero secret patterns in every PR
+- **Enforcement**: unverified
+- **Tool**: gitleaks CI step (to be added to go-tests.yml)
+- **Scope**: pr
+- **Governance requirement**: No secrets committed to source control
+- **Operational meaning**: gitleaks scans the PR diff for secret
+  patterns; any finding fails the check
+- **Verification method**: deterministic — gitleaks in CI workflow
+- **Evidence**: gitleaks CI step passes with zero findings
+- **Failure action**: PR blocked — merge cannot proceed until secrets
+  are removed and history cleaned
+- **Frame check**: confirmed aligned — engineering (CI scan catches
+  secrets missed by hooks), compliance (every merged PR has passing
+  scan in audit trail), AI system (CI gate independently verifies)
+
+### Approved dependency licenses
+
+- **Rule**: Every external dependency must use a permissive
+  OSI-approved license from the allowlist: MIT, Apache-2.0,
+  BSD-2-Clause, BSD-3-Clause. Copyleft licenses (GPL, AGPL, LGPL)
+  are prohibited.
+- **Enforcement**: unverified
+- **Tool**: go-licenses or licensei (activate when first external
+  dependency is added)
+- **Scope**: pr
+- **Governance requirement**: All dependencies must have approved
+  open-source licenses
+- **Operational meaning**: Currently stdlib-only; constraint activates
+  with the first external dependency. When active, a CI license check
+  verifies every dependency against the allowlist.
+- **Verification method**: deterministic when activated; unverified
+  until first external dependency
+- **Evidence**: When activated, CI license check output. Until then,
+  go.mod showing zero external dependencies.
+- **Failure action**: When activated, PR blocked. Until then, any PR
+  adding an external dependency triggers manual license review.
+- **Frame check**: confirmed aligned — engineering (allowlist enforced
+  by CI tool), compliance (license audit report per PR), AI system
+  (agent checks license compatibility before recommending dependencies)
+
+### AI change traceability
+
+- **Rule**: Every AI-assisted PR must have: (1) identifiable commits
+  via branch naming or commit metadata, (2) a PR description section
+  stating what was AI-generated, (3) a linked session record (design
+  spec, plan doc, or reflection log entry)
+- **Enforcement**: agent
+- **Tool**: harness-enforcer
+- **Scope**: pr
+- **Governance requirement**: AI-generated changes must be
+  attributable — traceability from change to AI session
+- **Operational meaning**: The agent reviews PRs for three traceability
+  elements: commit-level identification, PR-level attribution, and
+  session-level records. Flags gaps as advisory warnings.
+- **Verification method**: agent — harness-enforcer checks PRs for
+  attribution metadata, AI-session markers, and linked session records
+- **Evidence**: Branch names or commit messages indicating AI-assisted
+  work, PR description with AI attribution, linked design spec/plan/
+  reflection log entry
+- **Failure action**: advisory — agent flags missing traceability,
+  merge proceeds after human review confirms attribution is adequate
+- **Frame check**: confirmed aligned — engineering (commits, PRs, and
+  docs linked to AI sessions), compliance (audit trail queryable via
+  git history and docs/observability), AI system (agent checks own
+  output for traceability before declaring work complete)
+
 ---
 
 ## Garbage Collection
@@ -141,7 +251,8 @@
 
 ## Status
 
-Last audit: 2026-04-01
-Constraints enforced: 7/8
+Last audit: 2026-04-14
+Constraints enforced: 7/8 (technical) + 2/5 (governance)
+Governance constraints: 5 (1 deterministic, 1 agent, 3 unverified)
 Garbage collection active: 5/5
 Drift detected: no
