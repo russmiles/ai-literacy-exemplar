@@ -38,3 +38,12 @@
 - **Surprise**: Two of the three fragment tests passed immediately because the existing code already strips fragments and checks file existence — only the "missing heading" case failed, which is the actual new behaviour. This is a healthy sign: the existing design was close to correct and the new feature slotted in cleanly. The slug normalisation was straightforward because the spec constrained it to GitHub-compatible slugs, avoiding the rabbit hole of supporting every possible slug algorithm.
 - **Proposal**: Add to AGENTS.md: "When existing tests pass for new feature scenarios, it means the existing code partially implements the feature. The failing test is the one that matters — it defines the boundary between what exists and what's new."
 - **Improvement**: The spec-first workflow surfaced the slug normalisation concern during scenario writing, before any code was written. Writing FR-011 forced a decision about which slug algorithm to support, which prevented scope creep during implementation.
+
+---
+
+- **Date**: 2026-04-14
+- **Agent**: harness-health (via /harness-health command)
+- **Task**: Harness health snapshot generation — second snapshot, first trend comparison
+- **Surprise**: Despite 100% signal quality on reflections (all 3 entries have Surprise + Proposal), the learning flow has stalled: two reflections from 2026-03-31 are now 14 days old with no promotion review. The go-implementer's "failing test defines the boundary" insight and the assessor's "L4→L5 requires elapsed time" insight are both sitting unpromoted. The compound learning pipeline is producing high-quality inputs but the human review step — the bottleneck — hasn't fired. This is the configured-vs-operational gotcha applied to the learning system itself.
+- **Proposal**: Add to GOTCHAS: "The compound learning pipeline has two speeds: agent-speed (reflections appear immediately) and human-speed (promotions require review). If reflections accumulate without promotion reviews, the pipeline produces signal that never becomes institutional memory. The /harness-health nudge for unpromoted reflections exists precisely to close this gap — act on it."
+- **Improvement**: The health snapshot should track "days since last promotion review" as a first-class metric, not just count promotions. A promotion count of zero is ambiguous — it could mean nothing worth promoting, or it could mean nobody looked. Tracking review dates would distinguish the two.

@@ -5,7 +5,7 @@
 [![Lint Markdown](https://github.com/russmiles/ai-literacy-exemplar/actions/workflows/lint-markdown.yml/badge.svg)](https://github.com/russmiles/ai-literacy-exemplar/actions/workflows/lint-markdown.yml)
 [![Go 1.26.1](https://img.shields.io/badge/Go-1.26.1-00ADD8?logo=go&logoColor=white)](https://go.dev/)
 [![Harness](https://img.shields.io/badge/Harness-7%2F8_enforced-4682B4?style=flat-square)](HARNESS.md)
-[![Harness Health](https://img.shields.io/badge/Harness_Health-Healthy-2E8B57?style=flat-square)](observability/snapshots/2026-04-01-snapshot.md)
+[![Harness Health](https://img.shields.io/badge/Harness_Health-Healthy-2E8B57?style=flat-square)](observability/snapshots/)
 [![Mutation Testing](https://img.shields.io/badge/Mutation_Testing-weekly-4682B4?style=flat-square)](HARNESS.md)
 [![Coverage](https://img.shields.io/badge/Coverage-96%25-2E8B57?style=flat-square)](HARNESS.md)
 [![AI Literacy](https://img.shields.io/badge/AI_Literacy-Level_4_Specification_Architect-2E8B57?style=flat-square)](assessments/2026-04-01-assessment.md)
