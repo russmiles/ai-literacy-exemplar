@@ -74,3 +74,19 @@
 - **Surprise**: The govulncheck CI failure was the only obstacle, and it was entirely pre-existing — Go 1.26.1 had four known crypto/x509 and crypto/tls vulnerabilities fixed in 1.26.2. The test workflow only runs on PRs (not push to main), so the vulnerability had been silently accumulating on main. Our feature branch was the first to trigger it. The actual feature implementation — six tasks across eight new files — went through subagent dispatch with zero implementation issues. Haiku-class models handled all four formatter tasks (interface + three implementations) without errors, confirming that well-specified plans with complete code make model selection a cost optimisation, not a quality risk.
 - **Proposal**: Add to AGENTS.md: "When a plan includes complete code in every step, cheap/fast models can execute mechanical tasks reliably. Reserve capable models for integration tasks (multi-file wiring) and review. The plan's specificity is what determines the minimum viable model, not the task's importance."
 - **Improvement**: The govulncheck failure exposed a gap in the CI observability cadence — vulnerabilities in the Go toolchain can appear between assessments and won't surface until something triggers the test workflow on a PR. Consider adding a scheduled weekly run of go-tests.yml against main to catch these proactively rather than discovering them on feature branches.
+
+---
+
+- **Date**: 2026-04-14
+- **Agent**: harness-health (via /harness-health command)
+- **Task**: Bring project to Observatory-ready state — add weekly cadence config, generate first schema 1.2.0 snapshot with per-constraint and per-layer YAML, emit Observatory events
+- **Surprise**: The HARNESS.md Observability section with `Snapshot cadence: weekly` already existed from a prior session, so step 1 was a no-op. The real work was in the YAML block: upgrading from the flat summary style (schema 1.0.0 with `enforcement_ratio: 0.85`) to per-item granularity (schema 1.2.0 with a `constraints[]` array and `context_depth.layers[]`). The per-item format makes each constraint individually queryable by portfolio tools — the previous flat ratio hid which constraints were unverified. This is the difference between "85% enforced" (opaque) and "SBOM generation: unverified" (actionable).
+- **Proposal**: Add to AGENTS.md: "When upgrading Observatory schema versions, the per-item arrays (constraints[], layers[], feedback_loops[]) are the high-value additions. Summary ratios like enforcement_ratio should be computed from the array, not maintained independently — a single source of truth prevents drift between the summary and the detail."
+- **Improvement**: The snapshot-format.md reference in the plugin still documents schema 1.0.0 structure. The 1.2.0 schema with per-item arrays came from the user's instructions, not from the plugin reference. Future plugin updates should include the full 1.2.0 schema in the reference file so agents generate it without explicit instructions.
+- **Signal**: workflow
+- **Constraint**: none
+- **Session metadata**:
+  - Duration: ~15 min
+  - Model tiers used: capable (100%)
+  - Pipeline stages completed: harness-health snapshot, reflect, event emission
+  - Agent delegation: manual
