@@ -133,6 +133,12 @@
 
 ---
 
+## Observability
+
+- Snapshot cadence: weekly
+
+---
+
 ## Status
 
 Last audit: 2026-04-01
